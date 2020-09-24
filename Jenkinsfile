@@ -60,7 +60,7 @@ node
 {
    def MAVEN_HOME = tool "MAVEN_HOME"
    def JAVA_HOME = tool "JAVA_HOME"
-   env.PATH="${env.PATH}:${MAVEN_HOME}/bin:${JAVA_HOME}/bin"
+   env.PATH="${env.PATH}:${MAVEN_HOME}\bin:${JAVA_HOME}\bin"
  //properties([[$class: 'BuildConfigProjectProperty', name: '', namespace: '', resourceVersion: '', uid: ''], pipelineTriggers([pollSCM('* * * * *')])])
    try{
    stage('Checkout')
@@ -74,7 +74,7 @@ node
    stage('Initial Setup')
    {   
        FAILED_STAGE=env.STAGE_NAME
-       sh 'mvn clean compile'
+       bat 'mvn clean compile'
    }
    if(env.UNIT_TESTING == 'True')
    {
@@ -82,7 +82,7 @@ node
    	{
         	
         	FAILED_STAGE=env.STAGE_NAME
-        	sh 'mvn -s Maven/setting test'
+        	bat 'mvn -s Maven/setting test'
    	}
    }
    
@@ -91,7 +91,7 @@ node
    	stage('Code Quality Analysis')
    	{
        		FAILED_STAGE=env.STAGE_NAME
-       		sh 'mvn -s Maven/setting sonar:sonar -Dsonar.host.url="${SONAR_HOST_URL}"'
+       		bat 'mvn -s Maven/setting sonar:sonar -Dsonar.host.url="${SONAR_HOST_URL}"'
    	}
    }   
    
@@ -100,7 +100,7 @@ node
    	stage('Code Coverage')
    	{
 		FAILED_STAGE=env.STAGE_NAME
-		sh 'mvn -s Maven/setting package -Djacoco.percentage.instruction=${EXPECTED_COVERAGE}'
+		bat 'mvn -s Maven/setting package -Djacoco.percentage.instruction=${EXPECTED_COVERAGE}'
    	}
    }
    
@@ -109,7 +109,7 @@ node
 	stage('Security Testing')
 	{
 		FAILED_STAGE=env.STAGE_NAME
-		sh 'mvn -s Maven/setting findbugs:findbugs'
+		bat 'mvn -s Maven/setting findbugs:findbugs'
 	}	
   }
    
@@ -120,15 +120,15 @@ node
         {  
    		
                FAILED_STAGE=env.STAGE_NAME
-               sh 'mvn package'
+               bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               sh "docker login ${DOCKER_REGISTRY} -u $username -p $password"
-               sh "docker build -t ${MS_NAME}:latest ."
-               sh "docker tag ${MS_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
-               sh "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
-               sh "docker rmi -f ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
-               sh "docker rmi -f ${MS_NAME}:latest"
+               bat "docker login ${DOCKER_REGISTRY} -u $username -p $password"
+               bat "docker build -t ${MS_NAME}:latest ."
+               bat "docker tag ${MS_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker rmi -f ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker rmi -f ${MS_NAME}:latest"
         
     
         }
