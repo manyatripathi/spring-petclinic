@@ -1,6 +1,6 @@
 APP_NAME: 'billingapplication'
 MS_NAME: 'spring-petclinic'
-BRANCH: 'master'
+BRANCH: 'main'
 GIT_SOURCE_URL:  'https://github.com/manyatripathi/spring-petclinic.git'
 SCR_CREDENTIALS: 'SCR_CRED'
 SONAR_HOST_URL: 'http://sonarqube-billingapplication-devops.apps.admcoepaas.local'
