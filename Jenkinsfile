@@ -116,7 +116,7 @@ node
    stage('Build and Tag Image for Dev')
    {
    		
-        withCredentials([usernamePassword(credentialsId: 'DockerID', usernameVariable: 'username', passwordVariable: 'password'))
+        withCredentials([usernamePassword(credentialsId: 'DockerID', usernameVariable: 'username', passwordVariable: 'password')])
         {  
    		
                FAILED_STAGE=env.STAGE_NAME
