@@ -1,0 +1,6 @@
+FROM java:8-alpine
+ENV APP_FILE='*-0.0.1-SNAPSHOT.jar' \
+APP_HOME=/usr/app
+EXPOSE 8080 
+COPY target/$APP_FILE $APP_HOME/
+CMD java -jar $APP_HOME/$APP_FILE
