@@ -1,5 +1,5 @@
 FROM java:8-alpine
-ENV APP_FILE='*-0.0.1-SNAPSHOT.jar' \
+ENV APP_FILE='*-2.3.0.BUILD-SNAPSHOT.jar' \
 APP_HOME=/usr/app
 EXPOSE 8080 
 COPY target/$APP_FILE $APP_HOME/
