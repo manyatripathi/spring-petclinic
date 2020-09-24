@@ -51,7 +51,7 @@ node
    stage('Initial Setup')
    {   
        FAILED_STAGE=env.STAGE_NAME
-           echo $PATH
+           echo "${PATH}"
        bat 'mvn clean compile'
    }
    if(env.UNIT_TESTING == 'True')
