@@ -25,7 +25,7 @@ def readProperties()
 	env.mailrecipient = property.mailrecipient
 	env.EXPECTED_COVERAGE = property.EXPECTED_COVERAGE
 	env.IMAGE_TAG = (new Date()).format("yyMMddHHmm", TimeZone.getTimeZone('UTC'))
-	env.ISTIO_CHECK = property.ISTIO_CHECK
+	
     
 }
 
@@ -58,7 +58,7 @@ podTemplate(cloud:'openshift',label: 'docker',
 {
 node 
 {
-   def MAVEN_HOME = tool "Maven_HOME"
+   def MAVEN_HOME = tool "MAVEN_HOME"
    def JAVA_HOME = tool "JAVA_HOME"
    env.PATH="${env.PATH}:${MAVEN_HOME}/bin:${JAVA_HOME}/bin"
  //properties([[$class: 'BuildConfigProjectProperty', name: '', namespace: '', resourceVersion: '', uid: ''], pipelineTriggers([pollSCM('* * * * *')])])
@@ -74,7 +74,7 @@ node
    stage('Initial Setup')
    {   
        FAILED_STAGE=env.STAGE_NAME
-       sh 'mvn -s Maven/setting clean compile'
+       sh 'mvn clean compile'
    }
    if(env.UNIT_TESTING == 'True')
    {
@@ -119,16 +119,16 @@ node
         withCredentials([usernamePassword(credentialsId: 'DockerID', usernameVariable: 'username', passwordVariable: 'password'))
         {  
    		
-       FAILED_STAGE=env.STAGE_NAME
-       sh 'mvn -s Maven/setting jar:jar spring-boot:repackage'
-       stash name:'executable', includes:'target/*,Dockerfile'
-      unstash name:'executable'
-      sh "docker login ${DOCKER_REGISTRY} -u registryuser -p $password"
-      sh "docker build -t ${MS_NAME}:latest ."
-      sh 'docker tag ${MS_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:billingapplication-dev-apps-${IMAGE_TAG}'
-			sh 'docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:billingapplication-dev-apps-${IMAGE_TAG}'
-			sh 'docker rmi -f ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:billingapplication-dev-apps-${IMAGE_TAG}'
-			sh 'docker rmi -f ${MS_NAME}:latest'
+               FAILED_STAGE=env.STAGE_NAME
+               sh 'mvn package'
+               stash name:'executable', includes:'target/*,Dockerfile'
+               unstash name:'executable'
+               sh "docker login ${DOCKER_REGISTRY} -u $username -p $password"
+               sh "docker build -t ${MS_NAME}:latest ."
+               sh "docker tag ${MS_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               sh "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               sh "docker rmi -f ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               sh "docker rmi -f ${MS_NAME}:latest"
         
     
         }
