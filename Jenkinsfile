@@ -37,7 +37,7 @@ node
 {
    def MAVEN_HOME = tool "MAVEN_HOME"
    def JAVA_HOME = tool "JAVA_HOME"
-   env.PATH="${env.PATH}:${MAVEN_HOME}\bin:${JAVA_HOME}\bin"
+   env.PATH="${env.PATH}:${MAVEN_HOME}/bin:${JAVA_HOME}/bin"
  //properties([[$class: 'BuildConfigProjectProperty', name: '', namespace: '', resourceVersion: '', uid: ''], pipelineTriggers([pollSCM('* * * * *')])])
    try{
    stage('Checkout')
@@ -51,6 +51,7 @@ node
    stage('Initial Setup')
    {   
        FAILED_STAGE=env.STAGE_NAME
+           echo $PATH
        bat 'mvn clean compile'
    }
    if(env.UNIT_TESTING == 'True')
