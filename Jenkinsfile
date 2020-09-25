@@ -104,6 +104,7 @@ node
                unstash name:'executable'
                def customImage = docker.build("${MS_NAME}:${IMAGE_TAG}")
                customImage.push()
+                echo customImage
                //bat "docker login -u $username -p $password"
                //bat "docker build -t ${MS_NAME}:latest ."
                //bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
