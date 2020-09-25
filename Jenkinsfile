@@ -101,7 +101,7 @@ node
                bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               bat "docker login -u $username -p $password"
+               bat "docker login "
                bat "docker build -t ${MS_NAME}:latest ."
                bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                bat "docker push ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
