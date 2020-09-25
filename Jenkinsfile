@@ -95,7 +95,7 @@ node
    
    stage('Build and Tag Image for Dev')
    {
-   		
+           script{	
         withCredentials([usernamePassword(credentialsId: 'DockerID', usernameVariable: 'username', passwordVariable: 'password')])
         {  
    		
@@ -107,6 +107,7 @@ node
                //customImage.push()
                // echo "${customImage}"
                bat "docker login https://index.docker.io/v1/ -u $username -p $password"
+                
                //bat "docker build -t ${MS_NAME}:latest ."
                //bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                //bat "docker push ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
@@ -115,7 +116,7 @@ node
         
     
         }
-	  
+           }
     
 	   
    }
