@@ -101,11 +101,11 @@ node
                bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               bat "docker login ${DOCKER_REGISTRY} -u $username -p $password"
+               bat "docker login -u $username -p $password"
                bat "docker build -t ${MS_NAME}:latest ."
-               bat "docker tag ${MS_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
-               bat "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
-               bat "docker rmi -f ${DOCKER_REGISTRY}/${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker push ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
+               bat "docker rmi -f /${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                bat "docker rmi -f ${MS_NAME}:latest"
         
     
