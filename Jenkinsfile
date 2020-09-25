@@ -39,7 +39,7 @@ node
    def JAVA_HOME = tool "JAVA_HOME"
    def DOCKER_TOOL = tool "My_Docker"
   
-        env.PATH="${env.PATH};${MAVEN_HOME}\\bin;${JAVA_HOME}\\bin;${My_Docker}"
+        env.PATH="${env.PATH};${MAVEN_HOME}\\bin;${JAVA_HOME}\\bin;${DOCKER_TOOL}"
  //properties([[$class: 'BuildConfigProjectProperty', name: '', namespace: '', resourceVersion: '', uid: ''], pipelineTriggers([pollSCM('* * * * *')])])
    try{
    stage('Checkout')
