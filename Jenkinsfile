@@ -37,8 +37,9 @@ node
 {
    def MAVEN_HOME = tool "MAVEN_HOME"
    def JAVA_HOME = tool "JAVA_HOME"
+   def DOCKER_TOOL = tool "My_Docker"
   
-        env.PATH="${env.PATH};${MAVEN_HOME}\\bin;${JAVA_HOME}\\bin"
+        env.PATH="${env.PATH};${MAVEN_HOME}\\bin;${JAVA_HOME}\\bin;${My_Docker}"
  //properties([[$class: 'BuildConfigProjectProperty', name: '', namespace: '', resourceVersion: '', uid: ''], pipelineTriggers([pollSCM('* * * * *')])])
    try{
    stage('Checkout')
@@ -102,11 +103,11 @@ node
                //bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               customImage = docker.build("${MS_NAME}:${IMAGE_TAG}")
-               customImage.push()
-                echo "${customImage}"
+               //customImage = docker.build("${MS_NAME}:${IMAGE_TAG}")
+               //customImage.push()
+               // echo "${customImage}"
                //bat "docker login -u $username -p $password"
-               //bat "docker build -t ${MS_NAME}:latest ."
+               bat "docker build -t ${MS_NAME}:latest ."
                //bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                //bat "docker push ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                //bat "docker rmi -f /${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
