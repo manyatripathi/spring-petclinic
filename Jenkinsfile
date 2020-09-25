@@ -102,7 +102,7 @@ node
                //bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               customImage = docker.build("${MS_NAME}:${IMAGE_TAG}")
+               //customImage = docker.build("${MS_NAME}:${IMAGE_TAG}")
                customImage.push()
                 echo "${customImage}"
                
