@@ -52,7 +52,7 @@ node
    {   
        FAILED_STAGE=env.STAGE_NAME
            echo "${PATH}"
-       bat 'mvn clean compile'
+       //bat 'mvn clean compile'
    }
    if(env.UNIT_TESTING == 'True')
    {
@@ -98,10 +98,10 @@ node
         {  
    		
                FAILED_STAGE=env.STAGE_NAME
-               bat 'mvn package'
+               //bat 'mvn package'
                stash name:'executable', includes:'target/*,Dockerfile'
                unstash name:'executable'
-               bat "docker login https://index.docker.io/v1/ -u $username -p $password"
+               //bat "docker login https://index.docker.io/v1/ -u $username -p $password"
                bat "docker build -t ${MS_NAME}:latest ."
                bat "docker tag ${MS_NAME}:latest ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
                bat "docker push ${DOCKER_REPO}/${MS_NAME}:${IMAGE_TAG}"
