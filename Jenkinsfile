@@ -94,7 +94,7 @@ node
    
    stage('Build and Tag Image for Dev')
    {
-           script{	
+          
         withCredentials([usernamePassword(credentialsId: 'DockerID', usernameVariable: 'username', passwordVariable: 'password')])
         {  
    		
@@ -115,7 +115,7 @@ node
         
     
         }
-           }
+           
     
 	   
    }
