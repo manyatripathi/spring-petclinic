@@ -4,6 +4,6 @@ ENV APP_FILE='*-2.3.0.BUILD-SNAPSHOT.jar' \
     APP_HOME=/usr/app
 EXPOSE 8080 
 COPY . .
-RUN mvn package
+RUN mvn package -skipTests
 COPY target/$APP_FILE $APP_HOME/
 CMD java -jar $APP_HOME/$APP_FILE
